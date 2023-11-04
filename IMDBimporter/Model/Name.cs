@@ -16,15 +16,18 @@ namespace IMDBimporter.Model
 
         public int? deathYear { get; set; }
        public List<string> primaryProfessions{ get; set; }
+        public List<string>KnownForTitles { get; set; }
 
-        public Name(string? nconst, string? primaryName, int? brithYear, int? deathYear, string primaryProfessionString)
+        public Name(string? nconst, string? primaryName, int? brithYear, int? deathYear,
+            string primaryProfessionString, string KnownForTitleString)
         {
             this.nconst = nconst;
             this.primaryName = primaryName;
             this.brithYear = brithYear;
             this.deathYear = deathYear;
             primaryProfessions = primaryProfessionString.Split(',').ToList();
-           
+            KnownForTitles = KnownForTitleString.Split(",").ToList();
+
         }
 
     }

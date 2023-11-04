@@ -24,26 +24,45 @@ namespace IMDBimporter
             var titles = new List<Title>();
             var crews = new List<TitleCrew>();
             var names = new List<Name>();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("---------------------------");            
+            Console.WriteLine("|    HVAD VIL DU SØGE     |");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("");
 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"1-  FOR AT DELETE ALT");
+            Console.WriteLine("2-   FOR AT NORMAL INSERT");
+            Console.WriteLine("3-   FOR PREPARED INSERT");
+            Console.WriteLine("4-   FOR BULK INSERT");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("5-   RED FILE ()");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("6-   FOR AT NORMAL CREW INSERT");
+            Console.WriteLine("7-   FOR PREPAED TITLE CREW INSERT");
+            Console.WriteLine("8-   FOR BULK TITLE CREW INSEET");
+            Console.WriteLine("9-   FOR AT DELETE TITLE CREW");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("10-  FOR AT NORMAL PERSON-NAME INSERT");
+            Console.WriteLine("11-  FOR AT PREPARED PERSON-NAME INSERT");
+            Console.WriteLine("12_  FOR AT BULK PERSON-NAME INSERT");
+            Console.WriteLine("13_  FOR AT DELETE ALT I PERSON-NAME TABELLEN");
+            Console.WriteLine("___________________________");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("14_  FOR AT DELETE FRA Nconst-KNOWNFORTITLE");
 
-            Console.WriteLine("hvad vil du ");
-            Console.WriteLine("1 for at delete alt");
-            Console.WriteLine("2 for at normal insert");
-            Console.WriteLine("3 for prepared insert");
-            Console.WriteLine("4 for bulk insert");
-            Console.WriteLine("5 Read File");
-            Console.WriteLine("6 for at normal Crew insert");
-            Console.WriteLine("7 for prepared Title Crew insert");
-            Console.WriteLine("8 for bulk Title Crew insert");
-            Console.WriteLine("9 for at delete Title Crew");
-            Console.WriteLine("10 for at normal Person name insert");
-            Console.WriteLine("11 for at prepared person name insert ");
-            Console.WriteLine("12 for at bulk person name insert");
-            Console.WriteLine("13 for at delete alt i persons tabel");
-            
-            
+            Console.WriteLine("__________________________________");
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
             string input = Console.ReadLine();
-
+            
 
             SqlConnection sqlConn = new SqlConnection(ConString);
             sqlConn.Open();
@@ -94,12 +113,13 @@ namespace IMDBimporter
 
                 case "4":
                     before = DateTime.Now;
-                    titles = helper.TitleReadFile();
+                    titles = helper.TitleReadFile();               
                     myInserter = new BulkInserter();
                     break;
+
                 case "5":
                     before = DateTime.Now;
-                    titles = helper.TitleReadFile();
+                    titles = helper.TitleReadFile();                  
 
                     break;
                 case "6":
@@ -144,7 +164,7 @@ namespace IMDBimporter
 
                 case "12":
                     before = DateTime.Now;
-                    names = helper.NameReadFile();
+                    names = helper.NameReadFile();                            
                     myInserter = new BulkInserter();
                     break;
 
@@ -163,6 +183,15 @@ namespace IMDBimporter
                     
                     break;
 
+                case "14":
+                    SqlCommand DeleteCommand = new SqlCommand(
+                       " DELETE FROM KnownForTitle;" +
+                       " DELETE FROM NconstKnownForTitle",
+                       sqlConn);
+                    DeleteCommand.ExecuteNonQuery();
+                    break;
+
+                
 
 
             }
@@ -175,6 +204,8 @@ namespace IMDBimporter
                 myInserter.InsertDataName(sqlConn, names);
                 GenreInserter.InsertGenres(sqlConn, titles);
                 primaryProfessionInserter.InsertPrimaryProfession(sqlConn, names);
+                KnownForTitleInserter.InsertKnownForTitle(sqlConn, names);
+                
             }
 
             sqlConn.Close();

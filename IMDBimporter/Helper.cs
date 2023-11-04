@@ -69,14 +69,14 @@ namespace IMDBimporter
             List<Name> names = new List<Name>();
 
             foreach (string line in System.IO.File.ReadLines
-                (@"E:\name.basics.tvs\data.tsv").Skip(1).Take(Range.All))
+                (@"E:\name.basics.tvs\data.tsv").Skip(1).Take(100000))
             {
                 string[] values = line.Split("\t");
                 if(values.Length == 6)
                 {
                     names.Add(new Name(values[0], values[1],
                         ConvertToInt(values[2]), ConvertToInt(values[3]),
-                        values[4]));
+                        values[4], values[5]));
                 }
 
             }

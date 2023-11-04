@@ -13,6 +13,7 @@ namespace IMDBimporter
 
         public static void InsertGenres(SqlConnection sqlConn,
             List<Title> titleList)
+            
         {
             HashSet<string> genres = new HashSet<string>();
             Dictionary<string, int> genreDict =
