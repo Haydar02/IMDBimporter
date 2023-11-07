@@ -12,7 +12,7 @@ namespace IMDBimporter
     public class MyMenu
     {
         Helper helper = new Helper();
-
+       
 
         public void Menu()
         {
@@ -24,8 +24,9 @@ namespace IMDBimporter
             var titles = new List<Title>();
             var crews = new List<TitleCrew>();
             var names = new List<Name>();
+
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("---------------------------");            
+            Console.WriteLine("---------------------------");
             Console.WriteLine("|    HVAD VIL DU SØGE     |");
             Console.WriteLine("___________________________");
             Console.WriteLine("");
@@ -60,19 +61,21 @@ namespace IMDBimporter
 
             Console.WriteLine("__________________________________");
 
+          
             Console.ForegroundColor = ConsoleColor.Magenta;
             string input = Console.ReadLine();
-            
+
 
             SqlConnection sqlConn = new SqlConnection(ConString);
             sqlConn.Open();
             int batchSize = 100000;
+
             IInserte? myInserter = null;
             DateTime before = DateTime.Now;
 
             switch (input)
-            { 
-                
+            {
+
                 case "1":
                     string deleteQurey = "DELETE TOP (" + batchSize + ") " +
                                                       "FROM Titles;" +
@@ -85,19 +88,19 @@ namespace IMDBimporter
                     {
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
-                    while(rowsAffected > 0);
+                    while (rowsAffected > 0);
 
                     sqlConn.Close();
                     break;
 
 
 
-                    //    "DELETE FROM Titles; " +
-                    //    "DELETE FROM Genres; " +
-                    //    "DELETE FROM TitleGenres;",
-                    //    sqlConn);
-                    //cmd.ExecuteNonQuery();
-                    //break;
+                //    "DELETE FROM Titles; " +
+                //    "DELETE FROM Genres; " +
+                //    "DELETE FROM TitleGenres;",
+                //    sqlConn);
+                //cmd.ExecuteNonQuery();
+                //break;
 
                 case "2":
                     before = DateTime.Now;
@@ -113,13 +116,13 @@ namespace IMDBimporter
 
                 case "4":
                     before = DateTime.Now;
-                    titles = helper.TitleReadFile();               
+                    titles = helper.TitleReadFile();
                     myInserter = new BulkInserter();
                     break;
 
                 case "5":
                     before = DateTime.Now;
-                    titles = helper.TitleReadFile();                  
+                    titles = helper.TitleReadFile();
 
                     break;
                 case "6":
@@ -142,7 +145,7 @@ namespace IMDBimporter
 
                     break;
 
-                case "9":                   
+                case "9":
 
                     SqlCommand sqlComm = new SqlCommand(
                         " DELETE FROM TitleCrew;",
@@ -152,7 +155,7 @@ namespace IMDBimporter
 
                 case "10":
                     before = DateTime.Now;
-                    names=helper.NameReadFile();
+                    names = helper.NameReadFile();
                     myInserter = new NormalInsert();
                     break;
 
@@ -164,7 +167,7 @@ namespace IMDBimporter
 
                 case "12":
                     before = DateTime.Now;
-                    names = helper.NameReadFile();                            
+                    names = helper.NameReadFile();
                     myInserter = new BulkInserter();
                     break;
 
@@ -180,7 +183,7 @@ namespace IMDBimporter
                         rowAffected = sqlCom.ExecuteNonQuery();
                     }
                     while (rowAffected > 0);
-                    
+
                     break;
 
                 case "14":
@@ -189,13 +192,9 @@ namespace IMDBimporter
                        " DELETE FROM NconstKnownForTitle",
                        sqlConn);
                     DeleteCommand.ExecuteNonQuery();
-                    break;
-
-                
-
+                    break;             
 
             }
-
 
             if (myInserter != null)
             {
@@ -205,7 +204,8 @@ namespace IMDBimporter
                 GenreInserter.InsertGenres(sqlConn, titles);
                 primaryProfessionInserter.InsertPrimaryProfession(sqlConn, names);
                 KnownForTitleInserter.InsertKnownForTitle(sqlConn, names);
-                
+
+
             }
 
             sqlConn.Close();
