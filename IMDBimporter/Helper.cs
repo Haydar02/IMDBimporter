@@ -20,7 +20,7 @@ namespace IMDBimporter
                 System.IO.File.ReadLines
                 (@"E:\title.basics (1).tsv\data.tsv")
                 //skippe nr 1 og starte fra nr 2
-                .Skip(1).Take(Range.All))
+                .Skip(1).Take(1000000))
 
 
             {
@@ -69,7 +69,7 @@ namespace IMDBimporter
             List<Name> names = new List<Name>();
 
             foreach (string line in System.IO.File.ReadLines
-                (@"E:\name.basics.tvs\data.tsv").Skip(1).Take(100000))
+                (@"E:\name.basics.tvs\data.tsv").Skip(1).Take(100))
             {
                 string[] values = line.Split("\t");
                 if(values.Length == 6)

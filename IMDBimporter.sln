@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDBimporter", "IMDBimporter\IMDBimporter.csproj", "{8FF73C0D-B5CE-426B-AA62-1AA3259C483E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaildCard", "WaildCard\WaildCard.csproj", "{6E0EED1D-1DA4-4734-894D-D35556682BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildCard", "WaildCard\WildCard.csproj", "{6E0EED1D-1DA4-4734-894D-D35556682BDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
